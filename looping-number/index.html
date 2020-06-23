@@ -1,0 +1,56 @@
+<style>
+  div {
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+  }
+  #loop {
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: -20px;
+  }
+
+  #loop > li {
+    display: flex;
+    height: 20px;
+  }
+</style>
+<div>
+  <ul id="loop">
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+
+<script>
+  document.addEventListener('visibilitychange', e => {
+    console.log('visibilitychange!', e)
+  })
+  var loopEl = document.getElementById('loop')
+
+  var els = Array.from(document.querySelectorAll('#loop > li'))
+
+  var currentNumber = -1
+
+  function setNumbers(num = 0) {
+    var nextNum = (num + 1) % 10
+    var prevNum = !num ? 9 : num - 1
+
+    var numbers = [prevNum, num, nextNum]
+
+    els.forEach((e, i) => {
+      e.innerText = numbers[i]
+    })
+  }
+
+  function loop() {
+    currentNumber++
+    setNumbers(currentNumber % 10)
+    setTimeout(loop, 1000)
+  }
+
+  loop()
+</script>
